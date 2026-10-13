@@ -31,7 +31,9 @@ dist-ssr
 # doc
 *.docx
 *.pdf
-*.md
 generate_docx.py
 generate_pdf.py
 proposal.typ
+MISSION_1_PROPOSAL.md
+MISSION_2_REPORT.md
+MISSION_2_USER_PROMPT_REVIEW.md
