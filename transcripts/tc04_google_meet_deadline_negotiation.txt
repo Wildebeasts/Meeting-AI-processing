@@ -1,0 +1,36 @@
+Meeting Transcript
+Date: October 13, 2026
+Attendees: Jordan Reed, Sophia Lin, Chloe Vance
+
+Transcript
+Jordan Reed
+15:00
+We need to finalize the cutover date to deprecate Legacy Auth API v1 and enforce Auth Gateway v2 with mTLS certificates. Sophia, can we cut over tomorrow noon?
+
+Sophia Lin
+15:25
+Tomorrow noon is impossible Jordan. Three enterprise partner mobile clients haven't uploaded their RSA public keys. If we pull the plug tomorrow noon, 12,000 active sessions will be terminated.
+
+Jordan Reed
+16:10
+We cannot delay forever because Security Compliance requires deprecation this month. How about next Wednesday at 10 AM?
+
+Sophia Lin
+16:45
+Next Wednesday still conflicts with the marketing Black Friday campaign freeze. Can we push to the end of the week during low traffic?
+
+Chloe Vance
+17:30
+How about Sunday at 23:59 UTC? Traffic is down 85% and our on-call infrastructure engineers will be on standby for the switchover.
+
+Sophia Lin
+17:55
+Sunday at 23:59 UTC works perfectly for engineering and QA.
+
+Jordan Reed
+18:15
+Locked in then. The definitive cutover deadline for deprecating Legacy Auth API v1 is Sunday 23:59 UTC.
+
+Sophia Lin
+18:40
+I'll take ownership of sending the final deprecation notice to partner developers with the Sunday 23:59 UTC cutoff. I will send the emails today by 18:00.

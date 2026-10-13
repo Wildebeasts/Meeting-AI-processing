@@ -1,0 +1,32 @@
+Meeting Transcript
+Date: October 13, 2026
+Attendees: VP Raymond, Tom Evans, Priya Sharma
+
+Transcript
+VP Raymond
+11:00
+The objective of this architecture review is to decide whether we migrate our 28 individual service repositories into a single Bazel Monorepo or remain on Polyrepos. Tom, present the infrastructure case.
+
+Tom Evans
+11:20
+A Bazel Monorepo is mandatory for cross-service atomic commits and unified dependency versions. Polyrepos are causing dependency drift and broken protobuf contracts every week.
+
+Priya Sharma
+12:15
+I strongly object. Our frontend build pipeline already takes 18 minutes in isolated repos. If you force frontend into Bazel, build times will balloon to 45 minutes, killing developer velocity for 60 engineers.
+
+Tom Evans
+13:10
+Bazel remote caching solves build times if developers configure their local Docker environments properly!
+
+Priya Sharma
+14:00
+Docker overhead on developer laptops is already at 90% RAM utilization! You cannot impose this without empirical benchmark proof!
+
+VP Raymond
+15:30
+Stop team. Both sides have valid arguments, but tempers are flaring and we lack reproducible build latency telemetry. We are at a complete impasse. There is no decision today. We will not proceed with Bazel monorepo migration at this time.
+
+VP Raymond
+16:00
+This remains an open blocker. Next step: Tom and Priya must jointly measure Bazel remote caching times on 3 sample services before we reconvene in Q3.

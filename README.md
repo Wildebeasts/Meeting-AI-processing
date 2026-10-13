@@ -73,18 +73,37 @@ pnpm run build
 pnpm run preview
 ```
 
-> **Lưu ý bảo mật:** Dự án **KHÔNG CHỨA** API key, mật khẩu hoặc dữ liệu nhạy cảm. Người dùng có thể chạy hoàn toàn ngoại tuyến với bộ 5 test case có sẵn, hoặc tự nhập Gemini API key cá nhân trong modal của giao diện (chỉ lưu trên LocalStorage trình duyệt).
+> **Lưu ý thực thi & bảo mật:** Dự án **KHÔNG CHỨA** API key, mật khẩu hoặc dữ liệu nhạy cảm. Người dùng dán Google Gemini API Key trực tiếp trên giao diện Header (lưu cục bộ trong trình duyệt) để gọi Live API thực tế.
 
 ---
 
-## 4. Bộ Kiểm Thử Mission 2 (5 Test Cases)
+## 4. Trình Bày Bài Làm (Submission Overview)
 
-| Mã test | Loại tình huống | Tên tình huống | Trạng thái |
-| :--- | :--- | :--- | :--- |
-| **TC-01** | **Làm tốt (Success)** | Thay đổi phương án & Đồng thuận cuối cùng (Memcached $\to$ Redis Cluster) | **ĐẠT (PASS)** |
-| **TC-02** | **Khó / Mơ hồ (Difficult)** | Đồng thuận ngầm & Đại từ nhân xưng mơ hồ ("You take care of this ASAP") | **ĐẠT CÓ CẢNH BÁO** |
-| **TC-03** | **Thất bại / Chưa tốt (Fail)** | Tranh luận mỉa mai ("Rewrite in Flutter") & Đổi ý phút chót | **CHƯA ĐẠT $\to$ ĐÃ SỬA CÓ HẠN CHẾ** |
-| **TC-04** | **Phức tạp (Multi-turn)** | Đàm phán Deadline 3 mốc (Trưa mai $\to$ Thứ Tư $\to$ Chủ Nhật 23:59) | **ĐẠT (PASS)** |
-| **TC-05** | **Bế tắc (Stalemate)** | Cuộc họp bất đồng sâu sắc ("No decision today") $\to$ Không bịa quyết định | **ĐẠT (PASS)** |
+### 4.1. Cách chạy sản phẩm:
+1. Chạy lệnh `pnpm install` để cài đặt dependencies.
+2. Chạy lệnh `pnpm run dev` và truy cập `http://localhost:5173`.
+3. Nhập Gemini API Key tại nút **Key Configured / Configure Key** trên Header.
+4. Chọn một trong 5 kịch bản mẫu từ menu **Load Different Transcript** hoặc dán transcript thực tế từ Google Meet để xem AI xử lý và đối soát.
 
-*(Chi tiết đầy đủ về Kỳ vọng, Kết quả thực tế, và Điều học được có sẵn trong giao diện mục **Bộ Kiểm Thử (5 TC)**)*.
+### 4.2. Các quyết định thiết kế cốt lõi (Decisions Made):
+- **Terminal Consensus Gate:** Chỉ công nhận phương án cuối cùng làm quyết định chính thức khi có xác nhận đồng thuận dứt khoát. Các đề xuất bị bác bỏ được tự động chuyển vào mục `Rejected Alternatives` kèm lý do loại bỏ.
+- **Commitment Gate cho Action Items:** Bắt buộc có cam kết ngôi thứ nhất (*"I will..."*, *"I own this..."*) hoặc giao việc được người nhận đồng ý. Mọi deadline mơ hồ (*"ASAP"*, *"càng sớm càng tốt"*) hoặc phân công đại từ thiếu rõ ràng đều bị gắn cờ cảnh báo `⚠ Needs Confirmation`.
+- **Zero-Hallucination khi Bế tắc (Stalemate):** Khi cuộc họp không đạt được thỏa thuận (*"No decision today"*, *"impasse"* như ở TC-05), hệ thống kiên quyết không tự bịa quyết định (`decisions: []`), mà chuyển sang quản lý tại mục `Key Friction & Blockers` và `Unresolved Items`.
+- **Hành trình Đồng thuận Đa giai đoạn & Đối soát 1-Click:** Tái hiện trajectory từ phân kỳ ban đầu đến điểm chốt (Interactive Timeline Stage Buttons), hỗ trợ bấm vào bất kỳ mốc nào để nhảy trực tiếp đến phát ngôn gốc trong transcript (Click-to-Verify).
+
+### 4.3. Hạn chế đã biết (Known Limitations):
+- **Thiếu dữ liệu âm thanh/ngữ điệu (Audio Prosody):** Phân tích văn bản thuần túy (Text-only transcript) không nắm bắt được cao độ và ngữ điệu giọng nói, khiến mô hình ngôn ngữ dễ nhầm các phát ngôn mỉa mai, cay đắng (sarcasm/irony) thành đồng thuận chân thực nếu người nói dùng từ ngữ khẳng định bề mặt.
+- **Phân nhánh quyết định song song phức tạp:** Với các cuộc họp lớn có nhiều chủ đề đan xen liên tục mà không có người điều phối gọi tên chủ đề rõ ràng, các giai đoạn thảo luận có thể bị gộp lẫn vào một trajectory chung.
+- **Phụ thuộc chất lượng ASR:** Bản ghi nếu bị sai tên riêng, thuật ngữ kỹ thuật viết tắt hoặc thiếu mốc thời gian sẽ làm giảm độ chính xác của cơ chế neo bằng chứng (Evidence Anchor).
+
+---
+
+## 5. Báo Cáo Kiểm Thử Tối Thiểu 05 Tình Huống (Format: Kỳ vọng → Kết quả thực tế → Đạt/Chưa đạt → Điều học được)
+
+| Mã | Tên tình huống & Loại | Kỳ vọng | Kết quả thực tế | Đạt / Chưa đạt | Điều học được |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TC-01** | **Kiến trúc Cache Redis vs Memcached**<br>*(Sản phẩm làm tốt)* | Phát hiện quyết định chọn Redis Cluster thay vì Memcached; tái hiện hành trình 3 giai đoạn tranh luận; gán việc cho Minh với deadline thứ Sáu. | Trích xuất chính xác `DEC-201` với huy hiệu `✓ Clear Explicit Consensus` (xanh lá); timeline 3 pha đầy đủ quote; Action Item gán đúng người và hạn chót. | **ĐẠT** | Khi luận điểm kỹ thuật rõ ràng và câu chốt dứt khoát (*"Agreed then..."*), CoT prompt và schema trích xuất đạt độ chính xác gần như tuyệt đối. |
+| **TC-02** | **Incident Postmortem & Phân công nhiệm vụ**<br>*(Dữ liệu khó / Không rõ ràng)* | Nhận diện quyết định kỹ thuật do 1 người nhận trách nhiệm; phát hiện việc giao việc bị động cho Elena với thời hạn mơ hồ *"ASAP"*. | Trích xuất quyết định cấu hình connection pool với huy hiệu `? Assumed Consent`; Action item của Elena tự động kích hoạt cảnh báo vàng `ASAP (⚠ Needs Confirmation / Date)`. | **ĐẠT** | Giao tiếp thực tế thường dùng cụm từ mơ hồ. Hệ thống cần bộ lọc cam kết (Commitment Gate) để gắn cờ rủi ro thay vì chấp nhận mù quáng. |
+| **TC-03** | **Chiến lược Mobile & Châm biếm (Sarcasm)**<br>*(Chưa xử lý tốt / Thất bại)* | Phát hiện câu nói mỉa mai *"Rewrite app in Flutter in 2 days"* là châm biếm, không coi đây là quyết định được thông qua. | Text-only LLM bị đánh lừa bởi từ ngữ bề mặt, ban đầu ghi nhận thành quyết định triển khai với huy hiệu đồng thuận giả định trước khi có prompt cấm châm biếm nghiêm ngặt. | **CHƯA ĐẠT** | Transcript chữ làm mất ngữ điệu âm thanh; cần bổ sung lớp kiểm tra cảm xúc và mức độ bất đồng chưa giải quyết để loại trừ false consensus. |
+| **TC-04** | **Đàm phán Deadline Auth Gateway v2**<br>*(Đàm phán đa vòng)* | Xuyên suốt đàm phán nhiều mốc (Trưa mai $\to$ Thứ Tư $\to$ Chủ Nhật 23:59), chỉ giữ lại mốc cuối cùng đã chốt; bác bỏ các mốc trước đó. | Trích xuất đúng mốc duy nhất `Sunday 23:59 UTC`, gán việc gửi thông báo cho Sophia; các mốc trước được ghi nhận vào timeline đàm phán thay vì sinh nhiều action item trùng lặp. | **ĐẠT** | Khi thời hạn bị thay đổi liên tục, mô hình cần quy tắc "Terminal Value Gate" để tránh tạo rác công việc với các mốc đã bị hủy. |
+| **TC-05** | **Tranh luận Bazel Monorepo vs Polyrepo**<br>*(Bế tắc / Dữ liệu khó)* | Cuộc họp bế tắc (*"No decision today"*, *"impasse"*); hệ thống kiên quyết không được bịa ra quyết định, chỉ ghi nhận vấn đề tồn đọng và việc benchmark. | Bảng tổng hợp hiển thị **Decisions: 0**; bất đồng được đưa vào **Key Friction & Blockers** kèm trích dẫn `[15:30]`; tạo đúng 1 việc đo đạc thực nghiệm cho Tom & Priya trong Q3. | **ĐẠT** | Khả năng phát hiện bế tắc (Negative-consensus detection) quan trọng không kém việc trích xuất đồng thuận; hệ thống phải biết khi nào "không có quyết định". |

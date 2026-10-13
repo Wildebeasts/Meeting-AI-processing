@@ -1,0 +1,32 @@
+Meeting Transcript
+Date: October 13, 2026
+Attendees: Sarah Jenkins, Kevin Wu, Marcus Vance
+
+Transcript
+Sarah Jenkins
+14:00
+Let's address the mobile app performance complaints on our Android checkout flow. Frame rate drops to 24 FPS during cart checkout.
+
+Kevin Wu
+14:22
+Why don't we just rewrite the entire banking application in Flutter over the weekend in 2 days? Problem solved haha!
+
+Sarah Jenkins
+14:40
+Very funny Kevin, but joking aside, a complete framework rewrite is off the table and would violate all our Q4 delivery commitments. Marcus, what is the realistic technical fix?
+
+Marcus Vance
+15:15
+Profiling shows the bottleneck is the JSON serialization over the JavaScript bridge in React Native. If we enable Hermes engine with pre-allocated memory buffers, CPU overhead drops by 60%.
+
+Kevin Wu
+16:02
+Hermes makes total sense. Let's do that instead of touching any framework layer.
+
+Sarah Jenkins
+16:45
+Decision approved: We will enable the Hermes engine and optimize JS bridge memory buffers on Android. The codebase remains on React Native.
+
+Marcus Vance
+17:10
+I'll commit the Hermes configuration pull request and verify it across our device test farm by Thursday 16:00.

@@ -1,0 +1,32 @@
+Meeting Transcript
+Date: October 13, 2026
+Attendees: Alex Chen, Maya Patel, Liam Vance
+
+Transcript
+Alex Chen
+08:35
+Hey team, let's settle the caching layer architecture for our microservices under 50k QPS peak load. Maya, what did the initial benchmark show?
+
+Maya Patel
+09:12
+I originally proposed Memcached because of its lightweight simplicity and low CPU footprint. It handles simple key-value reads nicely.
+
+Liam Vance
+11:40
+Wait Maya, we hit a critical wall with Memcached in staging. It lacks native disk persistence snapshots and automated key cluster sharding. If a node drops under traffic spikes, we lose the entire session cache.
+
+Alex Chen
+14:20
+Liam is right. I ran the failover benchmark against Redis Cluster with automated sentinel replication and disk snapshots. Redis Cluster handled the 50k QPS without dropping a single write.
+
+Maya Patel
+16:15
+Those numbers are convincing. Given our 99.99% session persistence SLA requirement, I withdraw the Memcached proposal.
+
+Alex Chen
+18:42
+Agreed then. We will adopt Redis Cluster as our official production cache tier. Memcached is officially rejected due to lack of persistence snapshots and automated replication.
+
+Liam Vance
+19:05
+I'll take charge of writing the Redis sentinel deployment playbook and benchmarking the replication lag. I will finish by Friday 5 PM.

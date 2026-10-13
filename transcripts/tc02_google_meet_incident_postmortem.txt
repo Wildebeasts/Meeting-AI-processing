@@ -1,0 +1,28 @@
+Meeting Transcript
+Date: October 13, 2026
+Attendees: Alex Chen, Elena Rostova, David Kim
+
+Transcript
+Alex Chen
+10:00
+Let's begin the Post-Mortem for yesterday's Severity-1 Payment Outage. Elena, what was the primary root cause?
+
+Elena Rostova
+10:18
+The payment service database connection pool was unbounded. During the morning flash sale, connections spiked to 4,000, exhausting all MySQL worker threads and causing HTTP 500 timeouts across the checkout flow.
+
+David Kim
+11:05
+Someone really ought to audit all 45 microservices in the company someday and set global limits on everything.
+
+Alex Chen
+11:45
+That's a nice thought for later, but let's stay laser-focused on the immediate payment tier fix. David, can you handle the connection pool limiter?
+
+David Kim
+12:10
+Yes, I will own deploying the connection pool limiter set to 150 max connections with Datadog healthcheck alerts. I will deploy it by Wednesday 17:00.
+
+Alex Chen
+12:35
+Elena, you take care of updating the disaster recovery runbook and on-call escalation policy as soon as possible.
