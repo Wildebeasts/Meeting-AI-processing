@@ -28,9 +28,7 @@ Các giải pháp tóm tắt văn bản thông thường (Passive Text Summariza
     - **Việc cần làm (Action Items):** Nhiệm vụ cụ thể, người nhận việc, hạn chót và nút **Phê duyệt 1-Click (1-Click Verify)**.
     - **Vấn đề chưa chốt (Open Issues / Blockers):** Ghi nhận các thảo luận bế tắc hoặc hoãn lại, ngăn chặn AI tự ý suy diễn (Anti-hallucination).
 - **Cơ chế Đối soát Tức thì (Click-to-Verify):** Bấm vào bất kỳ trích dẫn nào ở cột phải, cột transcript bên trái sẽ tự động cuộn đến đúng câu nói gốc và nhấp nháy hiệu ứng làm nổi bật (Highlight pulse).
-- **Bộ 5 Tình Huống Kiểm Thử (Test Bench Modal):** Tích hợp sẵn bộ test đầy đủ các trường hợp: Thành công, Dữ liệu khó/mơ hồ, và Thất bại.
-- **Tùy chọn LLM đa dạng:** Chạy 100% tự động ngoại tuyến thông qua bộ máy suy luận cục bộ, hoặc tích hợp trực tiếp Google Gemini API qua modal cài đặt key an toàn trên trình duyệt.
-- **Xuất dữ liệu chuẩn (Export):** Hỗ trợ xuất Pydantic JSON Schema (sẵn sàng tích hợp Jira/Slack) hoặc Markdown Report.
+- **Tích hợp Google Gemini Live API thực tế:** Xử lý và suy luận trực tiếp thông qua Google Gemini API với hệ thống Prompt ràng buộc nghiêm ngặt và JSON Schema có cấu trúc; lưu trữ API key an toàn cục bộ trên trình duyệt (không lưu trữ backend).
 
 ---
 
