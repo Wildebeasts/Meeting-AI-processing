@@ -32,3 +32,6 @@ dist-ssr
 *.docx
 *.pdf
 *.md
+generate_docx.py
+generate_pdf.py
+proposal.typ
