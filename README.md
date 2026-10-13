@@ -87,36 +87,4 @@ pnpm run preview
 | **TC-04** | **Phức tạp (Multi-turn)** | Đàm phán Deadline 3 mốc (Trưa mai $\to$ Thứ Tư $\to$ Chủ Nhật 23:59) | **ĐẠT (PASS)** |
 | **TC-05** | **Bế tắc (Stalemate)** | Cuộc họp bất đồng sâu sắc ("No decision today") $\to$ Không bịa quyết định | **ĐẠT (PASS)** |
 
-*(Chi tiết đầy đủ về Kỳ vọng, Kết quả thực tế, và Điều học được có sẵn trong giao diện mục **Bộ Kiểm Thử (5 TC)** và tài liệu `MISSION_2_REPORT.md`).*
-
----
-
-## 5. Trả lời 3 Câu Hỏi Bắt Buộc
-
-### Câu 1: Phần quan trọng nhất bạn chọn để hiện thực hóa trong MVP là gì? Vì sao nếu phần này hoạt động, bạn tin rằng hướng giải quyết của mình là khả thi?
-* **Phần quan trọng nhất:** Bộ lọc **Terminal Consensus (Đồng thuận chốt chặn)** kết hợp **Danh mục phương án bị loại (Rejected Alternatives)** và **Trích dẫn đối soát 1-click (Evidence Timestamp Citations)**.
-* **Vì sao chứng minh khả thi:** Vì đây là bài toán khó nhất của cuộc họp thực tế (người tham gia đổi ý liên tục). Khi hệ thống chứng minh được việc giữ đúng kết luận cuối cùng (Redis Cluster) và loại bỏ phương án cũ (Memcached) có lý do rõ ràng, đồng thời cho phép người dùng click đối soát trực tiếp câu thoại gốc trong 5 giây, toàn bộ giả thuyết về tiết kiệm 80% thời gian duyệt biên bản của Mission 1 được chứng minh.
-
-### Câu 2: So với kế hoạch ở Mission 1, bạn đã thay đổi quyết định hoặc thiết kế nào? Điều gì trong quá trình làm khiến bạn thay đổi?
-* **Thay đổi 1:** Bổ sung trường `rejected_alternatives` trực tiếp trong thẻ Decision thay vì vẽ sơ đồ Timeline phức tạp. Điều này giúp giao diện gọn gàng, người dùng đọc hiểu ngay lập tức lý do tại sao không chọn phương án cũ.
-* **Thay đổi 2:** Tách bạch triệt để giữa `Action Items` và `Open Issues / Blockers`. Quá trình kiểm thử cho thấy các câu nói bộc phát (*"someone ought to look into that someday"*) nếu để chung sẽ bị AI gán bừa thành task rác. Đưa vào `Open Issues` giúp bảo vệ backlog của doanh nghiệp.
-
-### Câu 3: Loại thông tin nào hệ thống hiện dễ ghi nhận sai nhất? Bạn đang làm gì để tránh tạo ra một quyết định, công việc hoặc dữ liệu không thực sự tồn tại trong cuộc họp?
-* **Dễ ghi nhận sai nhất:**
-  1. *Ngữ nghĩa mỉa mai (Sarcasm/Irony):* Câu nói đùa như *"sao không viết lại bằng Flutter luôn đi"* dễ bị AI tưởng là giải pháp thật.
-  2. *Cam kết nửa vời & Đại từ mơ hồ:* Phát ngôn *"You do this ASAP"* khiến AI dễ bịa ra deadline hoặc gán sai người.
-* **Biện pháp phòng ngừa:**
-  - *Cam kết trách nhiệm rõ ràng (Commitment Gate):* Chỉ tạo task khi có phát ngôn nhận việc tự nguyện ngôi thứ nhất (*"I will handle..."*) hoặc giao việc trực tiếp được đồng ý.
-  - *Ràng buộc bằng chứng (Grounding Constraint):* Bắt buộc có quote và timestamp nguyên văn; không có thì không sinh dữ liệu.
-  - *Human-in-the-Loop:* Mọi dữ liệu mặc định ở trạng thái Nháp (Draft), con người chỉ mất 1-click để duyệt hoặc sửa trước khi đưa vào hệ thống chính thức.
-
----
-
-## 6. Kịch bản Video Demo (Dưới 5 Phút)
-
-Xem chi tiết kịch bản phân cảnh từng phút trong tệp [`MISSION_2_REPORT.md`](MISSION_2_REPORT.md).
-- **Phút 0:00 - 0:45:** Giới thiệu bài toán & Lựa chọn phần quan trọng nhất (Case đổi ý).
-- **Phút 0:45 - 2:30:** Live Demo thao tác trên Web MVP (Click-to-Verify, 1-Click Approve, Rejected alternatives).
-- **Phút 2:30 - 3:45:** Trình diễn tình huống khó (TC-02) và tình huống thất bại do mỉa mai (TC-03).
-- **Phút 3:45 - 4:45:** Hạn chế hiện tại của MVP và bài học kinh nghiệm.
-- **Phút 4:45 - 5:00:** Kết luận & Hướng phát triển tiếp theo.
+*(Chi tiết đầy đủ về Kỳ vọng, Kết quả thực tế, và Điều học được có sẵn trong giao diện mục **Bộ Kiểm Thử (5 TC)**)*.
